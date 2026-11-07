@@ -7,29 +7,60 @@
 
     <title>SkillBridge | Student Skill Gap Analyzer</title>
 
+    <!-- Tailwind CSS (CDN for instant browser preview & standalone execution) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#12315B',
+                            primary: '#2563EB',
+                            hover: '#1D4ED8',
+                            light: '#DBEAFE',
+                            soft: '#F4F8FD',
+                            accent: '#93C5FD'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Regular CSS Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Application Script (Transpiled & synchronized with TypeScript in src/) -->
+    <script src="script.js" defer></script>
 </head>
 
-<body>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
 
     <!-- Navigation Bar -->
-
     <header>
-        <div class="logo">Skill<span>Bridge</span></div>
+        <div class="logo">
+            <svg class="w-7 h-7 text-blue-600 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            Skill<span>Bridge</span>
+        </div>
 
-        <nav>
+        <nav class="hidden md:flex items-center space-x-1">
             <a href="#home">Home</a>
             <a href="#assessment">Assessment</a>
             <a href="#analysis">Skill Gap</a>
+            <a href="#detailedBreakdownSection">Breakdown</a>
             <a href="#recommendations">Recommendations</a>
         </nav>
 
-        <div class="profile">Student</div>
+        <div class="flex items-center space-x-3">
+            <div class="profile">Student Dashboard</div>
+        </div>
     </header>
 
 
     <!-- Home Section -->
-
     <section class="hero" id="home">
 
         <div class="hero-text">
@@ -42,20 +73,24 @@
             </h1>
 
             <p>
-                Identify your strengths, understand your skill gaps,
-                and get personalized recommendations to improve
-                your career readiness.
+                Identify your strengths, understand your technical and professional skill gaps,
+                and get personalized roadmaps and recommendations to accelerate your career readiness.
             </p>
 
-            <a href="#assessment" class="main-button">
-                Start Assessment
-            </a>
+            <div class="hero-actions">
+                <a href="#assessment" id="heroStartAssessment" class="main-button">
+                    Start Assessment →
+                </a>
+                <a href="#analysis" class="secondary-button">
+                    Explore Skill Gaps
+                </a>
+            </div>
 
         </div>
 
         <div class="hero-card">
 
-            <h3>Your Learning Journey</h3>
+            <h3>Career Readiness</h3>
 
             <div class="circle">75%</div>
 
@@ -65,9 +100,38 @@
 
     </section>
 
+    <!-- Target Role Selector Banner -->
+    <div class="bg-white border-y border-slate-200 py-6 px-6 lg:px-16 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">
+                    🎯
+                </div>
+                <div>
+                    <label for="targetRoleSelect" class="block text-xs font-bold text-slate-500 uppercase tracking-wider">
+                        Selected Career Benchmark
+                    </label>
+                    <h4 class="text-base font-bold text-slate-800" id="selectedRoleDescription">
+                        Frontend Developer - Building modern, responsive web user interfaces.
+                    </h4>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <span class="text-sm font-semibold text-slate-600 whitespace-nowrap">Target Role:</span>
+                <select id="targetRoleSelect" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm font-medium rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 outline-none transition cursor-pointer">
+                    <!-- Populated dynamically via JS/TS -->
+                    <option value="frontend_dev">Frontend Developer</option>
+                    <option value="fullstack_dev">Full-Stack Developer</option>
+                    <option value="data_scientist">Data & AI Analyst</option>
+                    <option value="software_engineer">General Software Engineer</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Assessment Section -->
-
     <section class="section" id="assessment">
 
         <div class="section-heading">
@@ -77,7 +141,7 @@
             <h2>Skill Assessment</h2>
 
             <span>
-                Evaluate your current knowledge and abilities.
+                Evaluate your current knowledge, soft skills, and engineering practices across 3 comprehensive tracks.
             </span>
 
         </div>
@@ -85,35 +149,47 @@
         <div class="card-grid">
 
             <div class="card">
-                <h3>Technical Skills</h3>
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold mb-4">
+                        💻
+                    </div>
+                    <h3>Technical Skills</h3>
+                    <p>
+                        Evaluate your programming, TypeScript, modern JavaScript, Tailwind CSS, and Git workflows.
+                    </p>
+                </div>
 
-                <p>
-                    Evaluate your programming and technical knowledge.
-                </p>
-
-                <button>Assess Skills</button>
+                <button data-assess-category="technical">Assess Technical Skills</button>
             </div>
 
 
             <div class="card">
-                <h3>Soft Skills</h3>
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold mb-4">
+                        🤝
+                    </div>
+                    <h3>Soft Skills</h3>
+                    <p>
+                        Measure your clarity in communication, team collaboration, empathy, and active listening.
+                    </p>
+                </div>
 
-                <p>
-                    Understand your communication and teamwork abilities.
-                </p>
-
-                <button>Assess Skills</button>
+                <button data-assess-category="soft">Assess Soft Skills</button>
             </div>
 
 
             <div class="card">
-                <h3>Professional Skills</h3>
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl font-bold mb-4">
+                        ⚙️
+                    </div>
+                    <h3>Professional Skills</h3>
+                    <p>
+                        Check your systematic problem-solving, algorithmic thinking, and milestone delivery readiness.
+                    </p>
+                </div>
 
-                <p>
-                    Check your problem-solving and workplace readiness.
-                </p>
-
-                <button>Assess Skills</button>
+                <button data-assess-category="professional">Assess Professional Skills</button>
             </div>
 
         </div>
@@ -122,7 +198,6 @@
 
 
     <!-- Skill Gap Section -->
-
     <section class="section" id="analysis">
 
         <div class="section-heading">
@@ -132,7 +207,7 @@
             <h2>Skill Gap Analysis</h2>
 
             <span>
-                Compare your current skills with your career goals.
+                Compare your current abilities directly against the benchmark required for your selected career role.
             </span>
 
         </div>
@@ -141,24 +216,39 @@
 
             <div>
 
-                <h3>Current Skill Level</h3>
+                <h3>Current Skill Levels</h3>
 
-                <p>HTML</p>
+                <div id="skillProgressContainer">
+                    <!-- Dynamic Progress Meters Rendered by JS/TS -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-sm mb-1.5">
+                            <span class="font-medium text-slate-700">HTML5 & Web Standards</span>
+                            <span class="text-xs font-semibold text-slate-500">Current: 80% / Target: 90%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-fill html"></div>
+                        </div>
+                    </div>
 
-                <div class="progress">
-                    <div class="progress-fill html"></div>
-                </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-sm mb-1.5">
+                            <span class="font-medium text-slate-700">CSS3, Flexbox & Grid</span>
+                            <span class="text-xs font-semibold text-slate-500">Current: 65% / Target: 85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-fill css"></div>
+                        </div>
+                    </div>
 
-                <p>CSS</p>
-
-                <div class="progress">
-                    <div class="progress-fill css"></div>
-                </div>
-
-                <p>Python</p>
-
-                <div class="progress">
-                    <div class="progress-fill python"></div>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-sm mb-1.5">
+                            <span class="font-medium text-slate-700">Python Programming</span>
+                            <span class="text-xs font-semibold text-slate-500">Current: 45% / Target: 75%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-fill python"></div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -166,14 +256,19 @@
 
             <div class="gap-info">
 
-                <h3>Identify Your Gaps</h3>
+                <div>
+                    <h3>Identify Your Gaps</h3>
 
-                <p>
-                    Find out which skills need improvement
-                    to reach your selected career goals.
-                </p>
+                    <p>
+                        Pinpoint exact competencies that require immediate improvement to meet industry hiring bars.
+                    </p>
 
-                <button>View Analysis</button>
+                    <div id="gapStatsSummary">
+                        <!-- Populated by JS/TS -->
+                    </div>
+                </div>
+
+                <button id="viewAnalysisBtn">View Full Breakdown ↓</button>
 
             </div>
 
@@ -181,9 +276,46 @@
 
     </section>
 
+    <!-- Detailed Gap Breakdown & Live Skill Adjuster -->
+    <section class="section pt-0" id="detailedBreakdownSection">
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-slate-200 gap-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900">Detailed Skill Gap Matrix</h3>
+                    <p class="text-slate-500 text-sm mt-1">Adjust sliders to model skill improvements or track progress in real-time.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="resetDataBtn" class="px-4 py-2 text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                        Reset to Defaults
+                    </button>
+                    <button id="exportReportBtn" class="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition shadow-sm">
+                        Export JSON Report ⬇
+                    </button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
+                            <th class="py-3 px-4 font-semibold">Skill Name</th>
+                            <th class="py-3 px-4 font-semibold">Track</th>
+                            <th class="py-3 px-4 font-semibold">Current Score</th>
+                            <th class="py-3 px-4 font-semibold">Benchmark</th>
+                            <th class="py-3 px-4 font-semibold">Status / Gap</th>
+                            <th class="py-3 px-4 font-semibold">Adjust Level</th>
+                        </tr>
+                    </thead>
+                    <tbody id="breakdownTableBody">
+                        <!-- Populated dynamically via JS/TS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Recommendations Section -->
-
     <section class="section" id="recommendations">
 
         <div class="section-heading">
@@ -193,19 +325,20 @@
             <h2>Recommended For You</h2>
 
             <span>
-                Explore learning opportunities and improve your skills.
+                Tailored curated learning paths, projects, and resources mapped directly to your detected skill gaps.
             </span>
 
         </div>
 
-        <div class="card-grid">
+        <div class="card-grid" id="dynamicRecommendationsGrid">
 
+            <!-- Fallback initial recommendation cards, replaced/enriched dynamically -->
             <div class="card">
 
                 <h3>Learn Programming</h3>
 
                 <p>
-                    Build a strong foundation in programming languages.
+                    Build a strong foundation in modern programming languages and frameworks.
                 </p>
 
                 <a href="https://www.freecodecamp.org/" target="_blank">
@@ -220,7 +353,7 @@
                 <h3>Improve Communication</h3>
 
                 <p>
-                    Develop confidence and effective communication skills.
+                    Develop confidence and effective technical communication skills for engineering teams.
                 </p>
 
                 <a href="https://www.coursera.org/" target="_blank">
@@ -235,7 +368,7 @@
                 <h3>Build Projects</h3>
 
                 <p>
-                    Apply your knowledge through practical projects.
+                    Apply your knowledge through practical real-world applications on GitHub.
                 </p>
 
                 <a href="https://github.com/" target="_blank">
@@ -249,17 +382,40 @@
     </section>
 
 
-    <!-- Footer -->
+    <!-- Interactive Assessment Modal -->
+    <div id="assessmentModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 md:p-8 modal-content-card relative border border-slate-100">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <div>
+                    <h4 class="text-lg font-bold text-slate-800">SkillBridge Interactive Assessment</h4>
+                    <span id="modalProgressIndicator" class="text-xs font-semibold text-blue-600">Question 1 of 8</span>
+                </div>
+                <button id="closeModalBtn" class="text-slate-400 hover:text-slate-600 w-8 h-8 rounded-lg flex items-center justify-center text-xl transition">
+                    ✕
+                </button>
+            </div>
 
+            <!-- Modal Body (Question & Options injected by JS/TS) -->
+            <div id="modalQuestionBody">
+                <!-- Dynamically loaded question content -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
     <footer>
 
         <h3>SkillBridge</h3>
 
         <p>
-            Helping students identify gaps and build better futures.
+            Helping students analyze skill gaps, discover growth roadmaps, and build better futures.
         </p>
 
-        <p>© 2026 SkillBridge. All rights reserved.</p>
+        <p class="text-xs text-slate-400 mt-4">
+            Built with TypeScript, JavaScript, Tailwind CSS, and Regular CSS • © 2026 SkillBridge. All rights reserved.
+        </p>
 
     </footer>
 
